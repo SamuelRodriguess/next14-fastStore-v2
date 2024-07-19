@@ -1,4 +1,5 @@
 import { Button as UIButton } from "@faststore/ui";
+import styles from "./CustomBuyButtons.module.scss";
 
 const CustomBuyButton = () => {
   return (
@@ -7,6 +8,7 @@ const CustomBuyButton = () => {
       onClick={() => {
         alert("alert click");
       }}
+      className={styles.CustomBuyButton}
     >
       CUSTOM NEW BUTTON
     </UIButton>
