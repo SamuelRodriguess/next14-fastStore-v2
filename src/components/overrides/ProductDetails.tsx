@@ -1,11 +1,15 @@
 import { SectionOverride } from "@faststore/core";
+import CustomBuyButton from "../CustomBuyButton";
 
 const SECTION = "ProductDetails" as const;
 
 const override: SectionOverride = {
   section: SECTION,
   components: {
-    BuyButton: { props: { size: "small", iconPosition: "right" } },
+    BuyButton: {
+      /*       props: { size: "small", iconPosition: "right" },
+       */ Component: CustomBuyButton,
+    },
   },
 };
 
