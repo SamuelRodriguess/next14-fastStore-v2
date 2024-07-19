@@ -1,0 +1,9 @@
+.CustomNavBar {
+  [data-fs-link-variant] {
+    color: gray;
+  }
+  [data-fs-navbar-center] {
+    display: flex;
+    justify-content: center;
+  }
+}
