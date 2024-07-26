@@ -1,6 +1,5 @@
-import { useSession } from '@faststore/core/src/sdk/session'
+import { useSession } from '@faststore/core/src/sdk/session/index';
 import { useCallback, useMemo } from 'react'
-
 
 interface PriceFormatterOptions {
   decimals?: boolean
@@ -8,6 +7,7 @@ interface PriceFormatterOptions {
 
 export const usePriceFormatter = ({ decimals }: PriceFormatterOptions = {}) => {
   const { currency, locale } = useSession()
+  console.log("🚀 ~ usePriceFormatter ~ locale:", locale)
 
   return useCallback(
     (price: number) =>

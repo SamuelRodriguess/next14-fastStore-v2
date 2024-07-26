@@ -7,63 +7,46 @@ import {
   FilterFacets as UIFilterFacets,
   FilterSlider as UIFilterSlider,
 } from "@faststore/ui";
-import { useFormattedPrice } from "@faststore/core";
-import "@faststore/ui/src/components/organisms/FilterSlider/styles.scss";
+import { useFormattedPrice } from "../../utils/formattedPrice";
+import type { FilterFacet } from "./Filter";
 
-import type { useFilter } from "@faststore/core/src/sdk/search/useFilter";
+import type { useFilter } from "../../hooks/useFilter";
 
-import styles from "./section.module.scss";
-
-export interface FilterSliderProps {
+interface Props {
+  /**
+   * The array that represents the details of every facet.
+   */
+  facets: FilterFacet[];
   /**
    * ID to find this component in testing tools (e.g.: cypress,
    * testing-library, and jest).
    */
   testId?: string;
   /**
-   * The array that represents the details of every facet.
-   */
-  facets: any[];
-  /**
    * Title for the `Filter` component.
    */
   title?: string;
-  /**
-   * CMS defined label for the clear button component.
-   */
-  clearButtonLabel?: string;
-  /**
-   * CMS defined label for the apply button component.
-   */
-  applyButtonLabel?: string;
 }
 
-function CustomFilters({
+function FilterSlider({
   facets,
   testId,
   dispatch,
   expanded,
   selected,
   title,
-  clearButtonLabel,
-  applyButtonLabel,
-}: FilterSliderProps & ReturnType<typeof useFilter>) {
+}: Props & ReturnType<typeof useFilter>) {
   const { resetInfiniteScroll, setState, state } = useSearch();
-
-  console.log("🚀 ~ facets:", facets);
 
   return (
     <UIFilterSlider
-      overlayProps={{
-        className: `section ${styles.section} section-filter-slider`,
-      }}
       title={title}
       size="partial"
       direction="rightSide"
       clearBtnProps={{
         variant: "secondary",
         onClick: () => dispatch({ type: "selectFacets", payload: [] }),
-        children: clearButtonLabel ?? "Clear All",
+        children: "Clear All",
       }}
       applyBtnProps={{
         variant: "primary",
@@ -76,7 +59,7 @@ function CustomFilters({
             page: 0,
           });
         },
-        children: applyButtonLabel ?? "Apply",
+        children: "Apply",
       }}
       onClose={() => {
         dispatch({
@@ -98,7 +81,7 @@ function CustomFilters({
           return (
             <UIFilterFacets
               key={`${testId}-${label}-${index}`}
-              testId={`mobile-${testId}`}
+              testId={testId}
               index={index}
               type={type}
               label={label}
@@ -109,7 +92,7 @@ function CustomFilters({
                     <UIFilterFacetBooleanItem
                       key={`${testId}-${facet.label}-${item.label}`}
                       id={`${testId}-${facet.label}-${item.label}`}
-                      testId={`mobile-${testId}`}
+                      testId={testId}
                       onFacetChange={(facet) =>
                         dispatch({ type: "toggleFacet", payload: facet })
                       }
@@ -127,11 +110,7 @@ function CustomFilters({
                   facetKey={facet.key}
                   min={facet.min}
                   max={facet.max}
-                  formatter={
-                    facet.key.toLowerCase() === "price"
-                      ? useFormattedPrice
-                      : undefined
-                  }
+                  formatter={useFormattedPrice}
                   onFacetChange={(facet) =>
                     dispatch({
                       type: "setFacet",
@@ -148,4 +127,4 @@ function CustomFilters({
   );
 }
 
-export default CustomFilters;
+export default FilterSlider;
