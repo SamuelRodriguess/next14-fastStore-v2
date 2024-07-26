@@ -45,11 +45,10 @@ const NavbarSliderUsage = () => {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <IconButton
-        aria-label="Open Menu"
+        aria-label=""
         icon={<Icon name="List" width={32} height={32} />}
         onClick={openNavbar}
       />
-      <p style={{ marginLeft: "12px" }}>Open Menu</p>
       {displayNavbar && <NavbarSlider />}
     </div>
   );

@@ -18,9 +18,6 @@ function CustomNavbarLinks({ classes }: { classes?: string }) {
   return (
     <NavbarLinks className={classes}>
       <div data-fs-navbar-links-wrapper data-fs-content="navbar">
-        <Button variant="tertiary" size="small">
-          Set location
-        </Button>
         <NavbarLinksList>
           {links.map((link) => (
             <NavbarLinksListItem key={link}>
