@@ -1,27 +1,22 @@
-import { useSession } from '@faststore/core/src/sdk/session/index';
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from "react";
 
 interface PriceFormatterOptions {
-  decimals?: boolean
+  decimals?: boolean;
 }
 
 export const usePriceFormatter = ({ decimals }: PriceFormatterOptions = {}) => {
-  const { currency, locale } = useSession()
-  console.log("🚀 ~ usePriceFormatter ~ locale:", locale)
-
   return useCallback(
     (price: number) =>
-      Intl.NumberFormat(locale, {
-        style: 'currency',
-        currency: currency.code,
-        minimumFractionDigits: decimals ? 2 : 0,
+      Intl.NumberFormat("pt-br", {
+        style: "currency",
+        currency: "BRL",
       }).format(price),
-    [currency.code, locale, decimals]
-  )
-}
+    [decimals],
+  );
+};
 
 export const useFormattedPrice = (price: number) => {
-  const formatter = usePriceFormatter()
+  const formatter = usePriceFormatter();
 
-  return useMemo(() => formatter(price), [formatter, price])
-}
+  return useMemo(() => formatter(price), [formatter, price]);
+};

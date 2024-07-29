@@ -1,13 +1,16 @@
 import styles from "./styles/CustomProductCard.module.scss";
+import "@faststore/ui/src/components/molecules/ProductCard/styles.scss";
+
 import {
   ProductCard as UIProductCard,
-  ProductCardContent as UIProductCardContent,
   ProductCardImage as UIProductCardImage,
   SkuSelector as UISkuSelector,
 } from "@faststore/ui";
 import { useMemo } from "react";
 import { ImageProps } from "next/image";
 import { Image } from "../Image";
+import { ProductCardContent as UIProductCardContent } from "../ProductCardContent/ProductCardContent";
+import { useFormattedPrice } from "../../utils/formattedPrice";
 
 /* import Image from "next/image";
 
@@ -159,21 +162,21 @@ const CustomProductCard = ({
         />
       </UIProductCardImage>
 
-      <h1>{product.name}</h1>
-      {/*  <UIProductCardContent
+      <UIProductCardContent
         title={name}
         price={{
           value: spotPrice,
           listPrice: listPrice,
           formatter: useFormattedPrice,
         }}
-        ratingValue={ratingValue}
+        linkProps={{
+          href: product?.slug,
+          target: "_blank",
+          rel: "noopener noreferrer",
+        }}
         outOfStock={outOfStock}
-        onButtonClick={onButtonClick}
-        showDiscountBadge={hasDiscount && showDiscountBadge}
-        includeTaxes={taxesConfiguration?.usePriceWithTaxes}
-        includeTaxesLabel={taxesConfiguration?.taxesLabel}
-      /> */}
+      />
+
       <UISkuSelector
         skuPropertyName="Size"
         availableVariations={
