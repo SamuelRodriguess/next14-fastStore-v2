@@ -1,17 +1,22 @@
+import styles from "./styles/CustomProductCard.module.scss";
 import {
   ProductCard as UIProductCard,
   ProductCardContent as UIProductCardContent,
   ProductCardImage as UIProductCardImage,
+  SkuSelector as UISkuSelector,
 } from "@faststore/ui";
 import { useMemo } from "react";
-import { ImageProps, Image } from "next/image";
-import NextLink from "next/link";
-import { useFormattedPrice } from "../../utils/formattedPrice";
+import { ImageProps } from "next/image";
+import { Image } from "../Image";
 
+/* import Image from "next/image";
+
+import { useFormattedPrice } from "../../utils/formattedPrice";
+ */
 type Variant = "wide" | "default";
 
 export interface ProductCardProps {
-  product: ProductSummary_ProductFragment;
+  product: any;
   index: number;
   /**
    * Sets a border to the component.
@@ -77,7 +82,8 @@ const CustomProductCard = ({
       lowPriceWithTaxes,
       offers: [{ listPrice: listPriceBase, availability, listPriceWithTaxes }],
     },
-  } = product;
+  } = product as any;
+  console.log("🚀 ~ product:", product);
 
   const outOfStock = useMemo(
     () => availability !== "https://schema.org/InStock",
@@ -91,7 +97,47 @@ const CustomProductCard = ({
     ? listPriceWithTaxes
     : listPriceBase;
 
+  console.log("🚀 ~ listPrice:", listPrice);
+
   const hasDiscount = spotPrice <= listPrice;
+
+  const product2 = {
+    name: "Tech Shirt",
+    isVariantOf: {
+      name: "Tech Shirt",
+      productGroupID: "99995945",
+      skuVariants: {
+        activeVariations: {
+          Size: "40",
+        },
+        slugsMap: {
+          "Size-40": "tech-shirt-99988216",
+          "Size-41": "tech-shirt-99988212",
+          "Size-42": "tech-shirt-99988210",
+        },
+        availableVariations: {
+          Size: [
+            {
+              alt: "skuvariation",
+              label: "Size: 40",
+              value: "40",
+            },
+            {
+              alt: "skuvariation",
+              label: "Size: 41",
+              value: "41",
+            },
+            {
+              alt: "skuvariation",
+              label: "Size: 42",
+              value: "42",
+              disabled: true,
+            },
+          ],
+        },
+      },
+    },
+  };
 
   return (
     <UIProductCard
@@ -99,6 +145,7 @@ const CustomProductCard = ({
       bordered={bordered}
       variant={variant}
       data-fs-product-card-sku={sku}
+      className={styles.CustomProductCard}
       {...otherProps}
     >
       <UIProductCardImage aspectRatio={aspectRatio}>
@@ -111,7 +158,9 @@ const CustomProductCard = ({
           loading={imgProps?.loading}
         />
       </UIProductCardImage>
-      <UIProductCardContent
+
+      <h1>{product.name}</h1>
+      {/*  <UIProductCardContent
         title={name}
         price={{
           value: spotPrice,
@@ -124,8 +173,15 @@ const CustomProductCard = ({
         showDiscountBadge={hasDiscount && showDiscountBadge}
         includeTaxes={taxesConfiguration?.usePriceWithTaxes}
         includeTaxesLabel={taxesConfiguration?.taxesLabel}
+      /> */}
+      <UISkuSelector
+        skuPropertyName="Size"
+        availableVariations={
+          product2?.isVariantOf?.skuVariants?.availableVariations
+        }
+        activeVariations={product2.isVariantOf.skuVariants?.activeVariations}
+        slugsMap={product2.isVariantOf.skuVariants?.slugsMap}
       />
-      <div>teste</div>
     </UIProductCard>
   );
 };
