@@ -11,7 +11,7 @@
     "test": "faststore test"
   },
   "dependencies": {
-    "@faststore/core": "3.0.77",
+    "@faststore/core": "3.0.89",
     "@vtex/graphql-utils": "^1.5.21-avon.0",
     "classnames": "^2.5.1",
     "next": "^13.5.6",
